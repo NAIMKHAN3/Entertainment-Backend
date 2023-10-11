@@ -11,14 +11,14 @@ datasource db {
 }
 
 model User {
-  id         String      @id @default(uuid())
+  id         String   @id @default(uuid())
   name       String
   email      String
   password   String
   role       UserRole @default(User)
   contactNo  String
   address    String
-  profileImg String
+  profileImg String @default("https://res.cloudinary.com/droyjiqwf/image/upload/v1696801827/download_d6s8bi.jpg")
 }
 
 enum UserRole {
@@ -26,3 +26,4 @@ enum UserRole {
   SuperAdmin
   User
 }
+
