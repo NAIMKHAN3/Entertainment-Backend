@@ -19,6 +19,7 @@ model User {
   contactNo  String
   address    String
   profileImg String @default("https://res.cloudinary.com/droyjiqwf/image/upload/v1696801827/download_d6s8bi.jpg")
+  travelRating TravelRating[]
 }
 
 enum UserRole {
@@ -26,4 +27,36 @@ enum UserRole {
   SuperAdmin
   User
 }
+
+model Vehicle {
+  id String @id @default(uuid())
+  name String
+  travel Travel[]
+}
+
+
+model Travel {
+  id String @id @default(uuid())
+  title String
+  location String
+  image String
+  price Int
+  vehicleId String
+  description String
+  vehicle Vehicle @relation(fields: [vehicleId], references: [id])
+  rating TravelRating[]
+}
+
+
+model TravelRating {
+  id String @id @default(uuid())
+  userId String
+  travelId String
+  rating Float
+  comment String
+  user User @relation(fields: [userId], references: [id])
+  travel Travel @relation(fields: [travelId], references: [id])
+}
+
+
 
