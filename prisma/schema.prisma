@@ -29,22 +29,22 @@ enum UserRole {
 }
 
 model CenemaCategory {
-  id   String @id @default(uuid())
-  name String
+  id     String   @id @default(uuid())
+  name   String
   cenema Cenema[]
 }
 
 model Cenema {
   id                String         @id @default(uuid())
   name              String
-  categoryId          String
+  categoryId        String
   producerName      String
   productionManager String
   image             String
-  realeaseDate       String
+  realeaseDate      String
   price             String
   description       String
-  category CenemaCategory @relation(fields: [categoryId], references: [id])
+  category          CenemaCategory @relation(fields: [categoryId], references: [id])
   rating            CenemaRating[]
 }
 
