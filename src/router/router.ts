@@ -5,6 +5,7 @@ import superAdminRouter from "../module/superAdmin";
 import categoryRouter from "../module/category/category.index";
 import cenemaRouter from "../module/cenema/cenema.index";
 import ratingRouter from "../rating/rating.index";
+import faqRouter from "../module/faq/faq.index";
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.use('/file', fileUploadRouter)
 router.use('/category', categoryRouter)
 router.use('/cenema', cenemaRouter)
 router.use('/rating', ratingRouter)
+router.use('/faq', faqRouter)
 
 export default router;
