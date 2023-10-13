@@ -15,7 +15,7 @@ app.get('/', (req: Request, res: Response) => {
         .send(
             {
                 success: true,
-                message: 'Travel Good Server Is Running'
+                message: 'Entertainment Server Is Running'
             }
         )
 });

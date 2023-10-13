@@ -11,15 +11,15 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(uuid())
-  name       String
-  email      String
-  password   String
-  role       UserRole @default(User)
-  contactNo  String
-  address    String
-  profileImg String @default("https://res.cloudinary.com/droyjiqwf/image/upload/v1696801827/download_d6s8bi.jpg")
-  travelRating TravelRating[]
+  id           String         @id @default(uuid())
+  name         String
+  email        String
+  password     String
+  role         UserRole       @default(User)
+  contactNo    String
+  address      String
+  profileImg   String         @default("https://res.cloudinary.com/droyjiqwf/image/upload/v1696801827/download_d6s8bi.jpg")
+  cenemaRating CenemaRating[]
 }
 
 enum UserRole {
@@ -28,35 +28,32 @@ enum UserRole {
   User
 }
 
-model Vehicle {
-  id String @id @default(uuid())
+model CenemaCategory {
+  id   String @id @default(uuid())
   name String
-  travel Travel[]
+  cenema Cenema[]
 }
 
-
-model Travel {
-  id String @id @default(uuid())
-  title String
-  location String
-  image String
-  price Int
-  vehicleId String
-  description String
-  vehicle Vehicle @relation(fields: [vehicleId], references: [id])
-  rating TravelRating[]
+model Cenema {
+  id                String         @id @default(uuid())
+  name              String
+  categoryId          String
+  producerName      String
+  productionManager String
+  image             String
+  realeaseDate       String
+  price             String
+  description       String
+  category CenemaCategory @relation(fields: [categoryId], references: [id])
+  rating            CenemaRating[]
 }
 
-
-model TravelRating {
-  id String @id @default(uuid())
-  userId String
-  travelId String
-  rating Float
-  comment String
-  user User @relation(fields: [userId], references: [id])
-  travel Travel @relation(fields: [travelId], references: [id])
+model CenemaRating {
+  id       String @id @default(uuid())
+  userId   String
+  cenemaId String
+  rating   Float
+  comment  String
+  user     User   @relation(fields: [userId], references: [id])
+  cenema   Cenema @relation(fields: [cenemaId], references: [id])
 }
-
-
-
