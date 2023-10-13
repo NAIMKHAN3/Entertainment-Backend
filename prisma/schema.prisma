@@ -57,3 +57,24 @@ model CenemaRating {
   user     User   @relation(fields: [userId], references: [id])
   cenema   Cenema @relation(fields: [cenemaId], references: [id])
 }
+
+
+model Blog {
+  id String @id @default(uuid())
+  image String
+  description String
+  like Int @default(0)
+}
+
+model Comment {
+  id String @id @default(uuid())
+  userId String
+  blogId String
+  comment String
+}
+
+model Like {
+  id String @id @default(uuid())
+  blogId String
+  userId String
+}
