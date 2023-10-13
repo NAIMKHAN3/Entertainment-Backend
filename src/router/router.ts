@@ -6,6 +6,7 @@ import categoryRouter from "../module/category/category.index";
 import cenemaRouter from "../module/cenema/cenema.index";
 import ratingRouter from "../rating/rating.index";
 import faqRouter from "../module/faq/faq.index";
+import userRouter from "../module/user/user.index";
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use('/category', categoryRouter)
 router.use('/cenema', cenemaRouter)
 router.use('/rating', ratingRouter)
 router.use('/faq', faqRouter)
+router.use('/user', userRouter)
 
 export default router;
