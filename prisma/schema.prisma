@@ -20,6 +20,7 @@ model User {
   address      String
   profileImg   String         @default("https://res.cloudinary.com/droyjiqwf/image/upload/v1696801827/download_d6s8bi.jpg")
   cenemaRating CenemaRating[]
+  blogComment Comment[]
 }
 
 enum UserRole {
@@ -53,7 +54,7 @@ model CenemaRating {
   userId   String
   cenemaId String
   rating   Float
-  comment  String
+  comment  String?
   user     User   @relation(fields: [userId], references: [id])
   cenema   Cenema @relation(fields: [cenemaId], references: [id])
 }
@@ -64,6 +65,7 @@ model Blog {
   image String
   description String
   like Int @default(0)
+  comment Comment[]
 }
 
 model Comment {
@@ -71,6 +73,8 @@ model Comment {
   userId String
   blogId String
   comment String
+  blog Blog @relation(fields: [blogId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Like {
@@ -78,3 +82,11 @@ model Like {
   blogId String
   userId String
 }
+
+model FAQ {
+  id String @id @default(uuid())
+  ques String
+  ans String
+}
+
+

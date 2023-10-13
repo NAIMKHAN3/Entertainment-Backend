@@ -1,13 +1,15 @@
 import { NextFunction, Request, Response } from "express";
-import prisma from "../utils/prisma";
+import prisma from "../../utils/prisma";
 
-export const createCategory = async (req: Request, res: Response, next: NextFunction) => {
+export const createCenema = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const result = await prisma.cenemaCategory.create({ data: req.body })
+        console.log(req.body)
+        const result = await prisma.cenema.create({ data: req.body })
+
         res.status(201).send({
             success: true,
             statusCode: 201,
-            message: 'Create Category Successfully',
+            message: 'Create Cenema Successfully',
             data: result
         })
     }
@@ -15,13 +17,13 @@ export const createCategory = async (req: Request, res: Response, next: NextFunc
         next(err)
     }
 }
-export const getCategory = async (req: Request, res: Response, next: NextFunction) => {
+export const getCenema = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const result = await prisma.cenemaCategory.findMany();
+        const result = await prisma.cenema.findMany({include:{category:true}});
         res.status(200).send({
             success: true,
             statusCode: 200,
-            message: 'Get Category Successfully',
+            message: 'Get Cenema Successfully',
             data: result
         })
     }
@@ -29,10 +31,10 @@ export const getCategory = async (req: Request, res: Response, next: NextFunctio
         next(err)
     }
 }
-export const updateCategory = async (req: Request, res: Response, next: NextFunction) => {
+export const updateCenema = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
-        const result = await prisma.cenemaCategory.update({
+        const result = await prisma.cenema.update({
             where: {
                 id
             },
@@ -41,7 +43,7 @@ export const updateCategory = async (req: Request, res: Response, next: NextFunc
         res.status(200).send({
             success: true,
             statusCode: 200,
-            message: 'Update Category Successfully',
+            message: 'Update cenema Successfully',
             data: result
         })
     }
@@ -52,7 +54,7 @@ export const updateCategory = async (req: Request, res: Response, next: NextFunc
 export const deleteCategory = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
-        const result = await prisma.cenemaCategory.delete({
+        const result = await prisma.cenema.delete({
             where: {
                 id
             }
@@ -60,11 +62,11 @@ export const deleteCategory = async (req: Request, res: Response, next: NextFunc
         res.status(200).send({
             success: true,
             statusCode: 200,
-            message: 'Delete Category Successfully',
+            message: 'Delete cenema Successfully',
             data: result
         })
     }
     catch (err) {
-
+        next(err)
     }
 }

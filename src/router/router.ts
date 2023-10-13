@@ -2,8 +2,8 @@ import { Router } from "express";
 import authRouter from "../module/auth/auth.index";
 import fileUploadRouter from "../module/fileUpload";
 import superAdminRouter from "../module/superAdmin";
-import categoryRouter from "../category/category.index";
-import cenemaRouter from "../cenema/cenema.index";
+import categoryRouter from "../module/category/category.index";
+import cenemaRouter from "../module/cenema/cenema.index";
 import ratingRouter from "../rating/rating.index";
 
 const router = Router();
