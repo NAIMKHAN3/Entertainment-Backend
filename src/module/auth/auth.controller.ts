@@ -20,6 +20,7 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
             data: req.body,
             select: {
                 id: true,
+                name: true,
                 email: true,
                 contactNo: true,
                 address: true,
@@ -71,6 +72,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
 
         const userInfo = {
             id: findUser.id,
+            name: findUser.name,
             email: findUser.email,
             address: findUser.address,
             contactNo: findUser.contactNo,

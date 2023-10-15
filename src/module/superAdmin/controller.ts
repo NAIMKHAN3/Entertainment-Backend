@@ -27,7 +27,7 @@ export const createAdmin = async (req: Request, res: Response, next: NextFunctio
                 profileImg: true
             }
         })
-       
+
         res.status(201).send({
             success: true,
             statusCode: 201,
@@ -37,5 +37,57 @@ export const createAdmin = async (req: Request, res: Response, next: NextFunctio
     }
     catch (err) {
 
+    }
+}
+
+export const getAllUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const result = await prisma.user.findMany({
+            where: {
+                role: 'User'
+            }
+        })
+        res.status(200).send({
+            success: true,
+            message: 'Get All User Success',
+            data: result
+        })
+    }
+    catch (err) {
+        next(err)
+    }
+}
+export const getAllAdmin = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const result = await prisma.user.findMany({
+            where: {
+                role: 'Admin'
+            }
+        })
+        res.status(200).send({
+            success: true,
+            message: 'Get All Admin Success',
+            data: result
+        })
+    }
+    catch (err) {
+        next(err)
+    }
+}
+export const getAllSuperAdmin = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const result = await prisma.user.findMany({
+            where: {
+                role: 'SuperAdmin'
+            }
+        })
+        res.status(200).send({
+            success: true,
+            message: 'Get All Super Admin Success',
+            data: result
+        })
+    }
+    catch (err) {
+        next(err)
     }
 }
