@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verifyBooking = void 0;
+exports.verifyStatusUpdate = exports.verifyBooking = void 0;
 const express_validation_1 = require("express-validation");
 const bookingValidation = {
     body: express_validation_1.Joi.object({
@@ -11,3 +11,9 @@ const bookingValidation = {
     })
 };
 exports.verifyBooking = (0, express_validation_1.validate)(bookingValidation, {}, {});
+const bookingStatusUpdate = {
+    query: express_validation_1.Joi.object({
+        status: express_validation_1.Joi.string().required().valid('Accepted', 'Rejected')
+    })
+};
+exports.verifyStatusUpdate = (0, express_validation_1.validate)(bookingStatusUpdate, {}, {});
