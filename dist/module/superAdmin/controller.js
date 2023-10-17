@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createAdmin = void 0;
+exports.getAllSuperAdmin = exports.getAllAdmin = exports.getAllUser = exports.createAdmin = void 0;
 const prisma_1 = __importDefault(require("../../utils/prisma"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const createAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -50,3 +50,57 @@ const createAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.createAdmin = createAdmin;
+const getAllUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield prisma_1.default.user.findMany({
+            where: {
+                role: 'User'
+            }
+        });
+        res.status(200).send({
+            success: true,
+            message: 'Get All User Success',
+            data: result
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.getAllUser = getAllUser;
+const getAllAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield prisma_1.default.user.findMany({
+            where: {
+                role: 'Admin'
+            }
+        });
+        res.status(200).send({
+            success: true,
+            message: 'Get All Admin Success',
+            data: result
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.getAllAdmin = getAllAdmin;
+const getAllSuperAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield prisma_1.default.user.findMany({
+            where: {
+                role: 'SuperAdmin'
+            }
+        });
+        res.status(200).send({
+            success: true,
+            message: 'Get All Super Admin Success',
+            data: result
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.getAllSuperAdmin = getAllSuperAdmin;

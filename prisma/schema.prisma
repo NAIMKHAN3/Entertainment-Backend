@@ -21,6 +21,7 @@ model User {
   profileImg   String         @default("https://res.cloudinary.com/droyjiqwf/image/upload/v1696801827/download_d6s8bi.jpg")
   cenemaRating CenemaRating[]
   blogComment Comment[]
+  cart Cart[]
 }
 
 enum UserRole {
@@ -47,6 +48,7 @@ model Cenema {
   description       String
   category          CenemaCategory @relation(fields: [categoryId], references: [id])
   rating            CenemaRating[]
+  cart Cart[]
 }
 
 model CenemaRating {
@@ -88,5 +90,14 @@ model FAQ {
   ques String
   ans String
 }
+
+model Cart {
+  id String @id @default(uuid())
+  userId String
+  cenemaId String
+  user User @relation(fields: [userId], references: [id])
+  cenema Cenema @relation(fields: [cenemaId],references: [id])
+}
+
 
 

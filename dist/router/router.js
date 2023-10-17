@@ -12,6 +12,7 @@ const cenema_index_1 = __importDefault(require("../module/cenema/cenema.index"))
 const rating_index_1 = __importDefault(require("../rating/rating.index"));
 const faq_index_1 = __importDefault(require("../module/faq/faq.index"));
 const user_index_1 = __importDefault(require("../module/user/user.index"));
+const cart_index_1 = __importDefault(require("../module/cart/cart.index"));
 const router = (0, express_1.Router)();
 router.use('/super-admin', superAdmin_1.default);
 router.use('/auth', auth_index_1.default);
@@ -21,4 +22,5 @@ router.use('/cenema', cenema_index_1.default);
 router.use('/rating', rating_index_1.default);
 router.use('/faq', faq_index_1.default);
 router.use('/user', user_index_1.default);
+router.use('/cart', cart_index_1.default);
 exports.default = router;
