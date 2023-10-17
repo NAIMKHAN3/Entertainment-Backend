@@ -6,4 +6,5 @@ const cenema_controller_1 = require("./cenema.controller");
 const router = (0, express_1.Router)();
 router.post('/create-cenema', cenema_validation_1.verifyCenema, cenema_controller_1.createCenema);
 router.get('/get-cenema', cenema_controller_1.getCenema);
+router.get('/get-cenema-by-id/:id', cenema_controller_1.getCinemaById);
 exports.default = router;

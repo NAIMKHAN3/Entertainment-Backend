@@ -22,6 +22,7 @@ model User {
   cenemaRating CenemaRating[]
   blogComment Comment[]
   cart Cart[]
+  booking Booking[]
 }
 
 enum UserRole {
@@ -49,6 +50,7 @@ model Cenema {
   category          CenemaCategory @relation(fields: [categoryId], references: [id])
   rating            CenemaRating[]
   cart Cart[]
+  cenema Booking[]
 }
 
 model CenemaRating {
@@ -97,6 +99,24 @@ model Cart {
   cenemaId String
   user User @relation(fields: [userId], references: [id])
   cenema Cenema @relation(fields: [cenemaId],references: [id])
+}
+
+model Booking {
+  id String @id @default(uuid())
+  userId String
+  cenemaId String
+  bookingDate String
+  slot String
+  person String
+  status Status @default(Pending)
+  user User @relation(fields: [userId], references: [id])
+  cenema Cenema @relation(fields: [cenemaId], references: [id])
+}
+
+enum Status {
+  Pending
+  Accepted
+  Rejected
 }
 
 

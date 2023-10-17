@@ -51,7 +51,31 @@ export const updateCenema = async (req: Request, res: Response, next: NextFuncti
         next(err)
     }
 }
-export const deleteCategory = async (req: Request, res: Response, next: NextFunction) => {
+export const getCinemaById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const result = await prisma.cenema.findFirst({
+            where: {
+                id
+            },
+            include:{
+                category: true,
+                rating: true
+            }
+        })
+        res.status(200).send({
+            success: true,
+            statusCode: 200,
+            message: 'Get cenema by id Successfully',
+            data: result
+        })
+    }
+    catch (err) {
+        next(err)
+    }
+}
+
+export const deleteCinema = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
         const result = await prisma.cenema.delete({

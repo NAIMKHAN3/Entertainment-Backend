@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCategory = exports.updateCenema = exports.getCenema = exports.createCenema = void 0;
+exports.deleteCinema = exports.getCinemaById = exports.updateCenema = exports.getCenema = exports.createCenema = void 0;
 const prisma_1 = __importDefault(require("../../utils/prisma"));
 const createCenema = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -66,7 +66,31 @@ const updateCenema = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.updateCenema = updateCenema;
-const deleteCategory = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const getCinemaById = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const result = yield prisma_1.default.cenema.findFirst({
+            where: {
+                id
+            },
+            include: {
+                category: true,
+                rating: true
+            }
+        });
+        res.status(200).send({
+            success: true,
+            statusCode: 200,
+            message: 'Get cenema by id Successfully',
+            data: result
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.getCinemaById = getCinemaById;
+const deleteCinema = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
         const result = yield prisma_1.default.cenema.delete({
@@ -85,4 +109,4 @@ const deleteCategory = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         next(err);
     }
 });
-exports.deleteCategory = deleteCategory;
+exports.deleteCinema = deleteCinema;
