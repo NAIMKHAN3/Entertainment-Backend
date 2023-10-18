@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createRating = void 0;
+exports.getRatings = exports.createRating = void 0;
 const prisma_1 = __importDefault(require("../../utils/prisma"));
 const createRating = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -30,3 +30,20 @@ const createRating = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.createRating = createRating;
+const getRatings = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield prisma_1.default.cenemaRating.findMany({ include: {
+                user: true,
+                cenema: true
+            }, take: 10 });
+        res.status(200).send({
+            success: true,
+            message: "Get Rating Success",
+            data: result
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.getRatings = getRatings;

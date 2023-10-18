@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllSuperAdmin = exports.getAllAdmin = exports.getAllUser = exports.createAdmin = void 0;
+exports.deleteUser = exports.userRoleUpdate = exports.getAllSuperAdmin = exports.getAllAdmin = exports.getAllUser = exports.createAdmin = void 0;
 const prisma_1 = __importDefault(require("../../utils/prisma"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const createAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -104,3 +104,44 @@ const getAllSuperAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, f
     }
 });
 exports.getAllSuperAdmin = getAllSuperAdmin;
+const userRoleUpdate = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    try {
+        const { id } = req.params;
+        const result = yield prisma_1.default.user.update({
+            where: {
+                id
+            },
+            data: req.body
+        });
+        res.status(200).send({
+            success: true,
+            message: `User ${(_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a.role} Success`,
+            data: result
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.userRoleUpdate = userRoleUpdate;
+const deleteUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const result = yield prisma_1.default.user.delete({
+            where: {
+                id
+            }
+        });
+        res.status(200).send({
+            success: true,
+            statusCode: 200,
+            message: "User Deleted Success",
+            data: result
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.deleteUser = deleteUser;

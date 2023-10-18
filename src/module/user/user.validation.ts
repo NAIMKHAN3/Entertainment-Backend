@@ -5,7 +5,7 @@ const profileUpdateValidation = {
         name: Joi.string().optional(),
         address: Joi.string().optional(),
         contactNo: Joi.string().optional(),
-        image: Joi.string().optional()
+        profileImg: Joi.string().optional()
     })
 }
 

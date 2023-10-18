@@ -6,6 +6,7 @@ import { verifyProfileUpdate } from "./user.validation";
 const router = Router();
 
 router.get('/get-profile', verifyJwt, getProfile)
-router.put('/update-profile',verifyProfileUpdate, verifyJwt, updateProfile)
+router.get('/get-profile-by-id/:id', verifyJwt, getProfile)
+router.put('/update-profile/:id',verifyProfileUpdate, verifyJwt, updateProfile)
 
 export default router;

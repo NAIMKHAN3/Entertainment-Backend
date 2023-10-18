@@ -7,7 +7,7 @@ const profileUpdateValidation = {
         name: express_validation_1.Joi.string().optional(),
         address: express_validation_1.Joi.string().optional(),
         contactNo: express_validation_1.Joi.string().optional(),
-        image: express_validation_1.Joi.string().optional()
+        profileImg: express_validation_1.Joi.string().optional()
     })
 };
 exports.verifyProfileUpdate = (0, express_validation_1.validate)(profileUpdateValidation, {}, {});

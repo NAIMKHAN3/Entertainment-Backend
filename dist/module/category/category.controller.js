@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCategory = exports.updateCategory = exports.getCategory = exports.createCategory = void 0;
+exports.deleteCategory = exports.updateCategory = exports.getCategoryById = exports.getCategory = exports.createCategory = void 0;
 const prisma_1 = __importDefault(require("../../utils/prisma"));
 const createCategory = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -44,6 +44,22 @@ const getCategory = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.getCategory = getCategory;
+const getCategoryById = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const result = yield prisma_1.default.cenemaCategory.findFirst({ where: { id } });
+        res.status(200).send({
+            success: true,
+            statusCode: 200,
+            message: 'Get Category Successfully',
+            data: result
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.getCategoryById = getCategoryById;
 const updateCategory = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;

@@ -91,3 +91,43 @@ export const getAllSuperAdmin = async (req: Request, res: Response, next: NextFu
         next(err)
     }
 }
+
+export const userRoleUpdate = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const result = await prisma.user.update({
+            where: {
+                id
+            },
+            data: req.body
+        })
+        res.status(200).send({
+            success: true,
+            message: `User ${req?.body?.role} Success`,
+            data: result
+        })
+    }
+    catch (err) {
+        next(err)
+    }
+}
+
+export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const result = await prisma.user.delete({
+            where: {
+                id
+            }
+        })
+        res.status(200).send({
+            success: true,
+            statusCode: 200,
+            message: "User Deleted Success",
+            data: result
+        })
+    }
+    catch (err) {
+        next(err)
+    }
+}

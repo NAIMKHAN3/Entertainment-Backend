@@ -29,6 +29,21 @@ export const getCategory = async (req: Request, res: Response, next: NextFunctio
         next(err)
     }
 }
+export const getCategoryById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const {id} = req.params;
+        const result = await prisma.cenemaCategory.findFirst({where:{id}});
+        res.status(200).send({
+            success: true,
+            statusCode: 200,
+            message: 'Get Category Successfully',
+            data: result
+        })
+    }
+    catch (err) {
+        next(err)
+    }
+}
 export const updateCategory = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;

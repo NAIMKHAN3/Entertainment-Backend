@@ -5,5 +5,7 @@ const category_validation_1 = require("./category.validation");
 const category_controller_1 = require("./category.controller");
 const router = (0, express_1.Router)();
 router.post('/create-category', category_validation_1.verifyCategory, category_controller_1.createCategory);
+router.post('/update-category/:id', category_validation_1.verifyCategory, category_controller_1.updateCategory);
 router.get('/get-category', category_controller_1.getCategory);
+router.get('/get-category-by-id/:id', category_controller_1.getCategoryById);
 exports.default = router;

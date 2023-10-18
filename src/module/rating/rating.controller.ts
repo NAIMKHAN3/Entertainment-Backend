@@ -16,3 +16,20 @@ export const createRating = async (req: Request, res: Response, next: NextFuncti
         next(err)
     }
 }
+export const getRatings = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+       
+        const result = await prisma.cenemaRating.findMany({include:{
+            user: true,
+            cenema: true
+        },take:10})
+        res.status(200).send({
+            success: true,
+            message: "Get Rating Success",
+             data: result
+        })
+    }
+    catch (err) {
+        next(err)
+    }
+}

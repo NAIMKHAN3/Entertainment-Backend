@@ -19,10 +19,28 @@ export const getProfile = async (req: Request, res: Response, next: NextFunction
         next(err)
     }
 }
+export const getProfileById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const result = await prisma.user.findFirst({
+            where: {
+                id
+            }
+        })
+        res.status(200).send({
+            success: true,
+            statusCode: 200,
+            data: result
+        })
+    }
+    catch (err) {
+        next(err)
+    }
+}
 
 export const updateProfile = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { id } = req.user;
+        const { id } = req.params;
         const result = await prisma.user.update({
             where: {
                 id

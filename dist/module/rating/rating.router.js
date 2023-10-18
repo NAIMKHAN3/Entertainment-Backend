@@ -6,4 +6,5 @@ const rating_validation_1 = require("./rating.validation");
 const rating_controller_1 = require("./rating.controller");
 const router = (0, express_1.Router)();
 router.post('/create-rating', verifyJwt_1.verifyJwt, rating_validation_1.verifyRating, rating_controller_1.createRating);
+router.get('/get-ratings', rating_controller_1.getRatings);
 exports.default = router;

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateProfile = exports.getProfile = void 0;
+exports.updateProfile = exports.getProfileById = exports.getProfile = void 0;
 const prisma_1 = __importDefault(require("../../utils/prisma"));
 const getProfile = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -33,9 +33,28 @@ const getProfile = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.getProfile = getProfile;
+const getProfileById = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const result = yield prisma_1.default.user.findFirst({
+            where: {
+                id
+            }
+        });
+        res.status(200).send({
+            success: true,
+            statusCode: 200,
+            data: result
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.getProfileById = getProfileById;
 const updateProfile = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { id } = req.user;
+        const { id } = req.params;
         const result = yield prisma_1.default.user.update({
             where: {
                 id
