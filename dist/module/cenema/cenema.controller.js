@@ -32,11 +32,42 @@ const createCenema = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
 exports.createCenema = createCenema;
 const getCenema = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield prisma_1.default.cenema.findMany({ include: { category: true } });
+        const { page, size, sortOrder, search } = req.query;
+        let skip = (parseInt(page) - 1) || 0;
+        const take = (parseInt(size)) || 10;
+        const order = (sortOrder === null || sortOrder === void 0 ? void 0 : sortOrder.toLowerCase()) === 'desc' ? 'desc' : 'asc';
+        const whereCondition = [];
+        if (skip < 0) {
+            skip = 0;
+        }
+        if (search) {
+            whereCondition.push({
+                OR: [
+                    { name: { contains: search, mode: 'insensitive' } },
+                    { producerName: { contains: search, mode: 'insensitive' } },
+                    { productionManager: { contains: search, mode: 'insensitive' } },
+                ],
+            });
+        }
+        const result = yield prisma_1.default.cenema.findMany({
+            where: {
+                AND: whereCondition
+            },
+            skip: skip * take,
+            take,
+            include: { category: true }
+        });
+        const total = yield prisma_1.default.cenema.count();
         res.status(200).send({
             success: true,
             statusCode: 200,
             message: 'Get Cenema Successfully',
+            meta: {
+                page: skip,
+                size: take,
+                total,
+                totalPage: Math.ceil(total / take)
+            },
             data: result
         });
     }
@@ -75,7 +106,11 @@ const getCinemaById = (req, res, next) => __awaiter(void 0, void 0, void 0, func
             },
             include: {
                 category: true,
-                rating: true
+                rating: {
+                    include: {
+                        user: true
+                    }
+                }
             }
         });
         res.status(200).send({
