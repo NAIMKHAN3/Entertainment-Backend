@@ -135,3 +135,77 @@ export const deleteCinema = async (req: Request, res: Response, next: NextFuncti
         next(err)
     }
 }
+
+export const getCinemaByCategory = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const categoryIds = await prisma.cenema.findMany({
+            distinct: ['categoryId'],
+            select: {
+              categoryId: true,
+            },
+          });
+          const result = await Promise.all(
+            categoryIds.map(async (categoryId) => {
+              return prisma.cenema.findFirst({
+                where: {
+                  categoryId: categoryId.categoryId,
+                },
+                include:{
+                    category: true
+                }
+              });
+            })
+          );
+        res.status(200).send({
+            success: true,
+            statusCode: 200,
+            message: 'Get cenema by category Successfully',
+            data: result
+        })
+    }
+    catch (err) {
+        next(err)
+    }
+}
+export const getCinemaByLatest = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const result = await prisma.cenema.findMany({
+            take: 6,  
+            orderBy: {
+              realeaseDate: 'desc',  
+            },
+            include:{
+                category: true
+            }
+          });
+        res.status(200).send({
+            success: true,
+            statusCode: 200,
+            message: 'Get cenema by latest Successfully',
+            data: result
+        })
+    }
+    catch (err) {
+        next(err)
+    }
+}
+export const getCinemaByRandom = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const result = await prisma.$queryRaw`
+      SELECT c.*, cc."name" AS "category"  
+      FROM "Cenema" c
+      JOIN "CenemaCategory" cc ON c."categoryId" = cc."id"
+      ORDER BY random()
+      LIMIT 6;
+    `;
+        res.status(200).send({
+            success: true,
+            statusCode: 200,
+            message: 'Get cenema by random Successfully',
+            data: result
+        })
+    }
+    catch (err) {
+        next(err)
+    }
+}

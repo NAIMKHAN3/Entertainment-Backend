@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCinema = exports.getCinemaById = exports.updateCenema = exports.getCenema = exports.createCenema = void 0;
+exports.getCinemaByRandom = exports.getCinemaByLatest = exports.getCinemaByCategory = exports.deleteCinema = exports.getCinemaById = exports.updateCenema = exports.getCenema = exports.createCenema = void 0;
 const prisma_1 = __importDefault(require("../../utils/prisma"));
 const createCenema = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -148,3 +148,77 @@ const deleteCinema = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.deleteCinema = deleteCinema;
+const getCinemaByCategory = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const categoryIds = yield prisma_1.default.cenema.findMany({
+            distinct: ['categoryId'],
+            select: {
+                categoryId: true,
+            },
+        });
+        const result = yield Promise.all(categoryIds.map((categoryId) => __awaiter(void 0, void 0, void 0, function* () {
+            return prisma_1.default.cenema.findFirst({
+                where: {
+                    categoryId: categoryId.categoryId,
+                },
+                include: {
+                    category: true
+                }
+            });
+        })));
+        res.status(200).send({
+            success: true,
+            statusCode: 200,
+            message: 'Get cenema by category Successfully',
+            data: result
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.getCinemaByCategory = getCinemaByCategory;
+const getCinemaByLatest = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield prisma_1.default.cenema.findMany({
+            take: 6,
+            orderBy: {
+                realeaseDate: 'desc',
+            },
+            include: {
+                category: true
+            }
+        });
+        res.status(200).send({
+            success: true,
+            statusCode: 200,
+            message: 'Get cenema by latest Successfully',
+            data: result
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.getCinemaByLatest = getCinemaByLatest;
+const getCinemaByRandom = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield prisma_1.default.$queryRaw `
+      SELECT c.*, cc."name" AS "category"  
+      FROM "Cenema" c
+      JOIN "CenemaCategory" cc ON c."categoryId" = cc."id"
+      ORDER BY random()
+      LIMIT 6;
+    `;
+        res.status(200).send({
+            success: true,
+            statusCode: 200,
+            message: 'Get cenema by random Successfully',
+            data: result
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.getCinemaByRandom = getCinemaByRandom;

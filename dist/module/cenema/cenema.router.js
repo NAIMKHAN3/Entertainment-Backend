@@ -9,4 +9,7 @@ router.put('/update-cenema/:id', cenema_validation_1.verifyCenemaUpdate, cenema_
 router.delete('/delete-cenema/:id', cenema_controller_1.deleteCinema);
 router.get('/get-cenema', cenema_controller_1.getCenema);
 router.get('/get-cenema-by-id/:id', cenema_controller_1.getCinemaById);
+router.get('/get-cenema-by-category', cenema_controller_1.getCinemaByCategory);
+router.get('/get-cenema-by-latest', cenema_controller_1.getCinemaByLatest);
+router.get('/get-cenema-by-random', cenema_controller_1.getCinemaByRandom);
 exports.default = router;
