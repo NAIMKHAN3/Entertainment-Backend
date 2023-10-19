@@ -84,6 +84,7 @@ exports.updateCategory = updateCategory;
 const deleteCategory = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
+        const deleteMovie = yield prisma_1.default.cenema.deleteMany({ where: { categoryId: id } });
         const result = yield prisma_1.default.cenemaCategory.delete({
             where: {
                 id

@@ -67,6 +67,7 @@ export const updateCategory = async (req: Request, res: Response, next: NextFunc
 export const deleteCategory = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
+        const deleteMovie = await prisma.cenema.deleteMany({where:{categoryId:id}})
         const result = await prisma.cenemaCategory.delete({
             where: {
                 id
