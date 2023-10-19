@@ -128,6 +128,10 @@ exports.userRoleUpdate = userRoleUpdate;
 const deleteUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
+        const deleteCart = yield prisma_1.default.cart.deleteMany({ where: { userId: id } });
+        const deleteBooking = yield prisma_1.default.booking.deleteMany({ where: { userId: id } });
+        const deleteRating = yield prisma_1.default.cenemaRating.deleteMany({ where: { userId: id } });
+        const deleteComment = yield prisma_1.default.comment.deleteMany({ where: { userId: id } });
         const result = yield prisma_1.default.user.delete({
             where: {
                 id

@@ -14,3 +14,18 @@ const validationCenema = {
 }
 
 export const verifyCenema = validate(validationCenema, {}, {})
+
+const validationCenemaUpdate= {
+    body: Joi.object({
+        name: Joi.string().optional(),
+        producerName: Joi.string().optional(),
+        productionManager: Joi.string().optional(),
+        image: Joi.string().optional(),
+        price: Joi.string().optional(),
+        description: Joi.string().optional(),
+        realeaseDate: Joi.string().optional(),
+        categoryId: Joi.string().optional()
+    })
+}
+
+export const verifyCenemaUpdate = validate(validationCenemaUpdate, {}, {})

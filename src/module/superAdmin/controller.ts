@@ -115,6 +115,11 @@ export const userRoleUpdate = async (req: Request, res: Response, next: NextFunc
 export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
+        const deleteCart = await prisma.cart.deleteMany({where:{userId:id}})
+        const deleteBooking = await prisma.booking.deleteMany({where:{userId:id}})
+        const deleteRating = await prisma.cenemaRating.deleteMany({where:{userId:id}})
+        const deleteComment = await prisma.comment.deleteMany({where:{userId:id}})
+       
         const result = await prisma.user.delete({
             where: {
                 id

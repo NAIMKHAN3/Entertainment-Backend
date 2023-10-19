@@ -78,6 +78,9 @@ export const getCinemaById = async (req: Request, res: Response, next: NextFunct
 export const deleteCinema = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
+        const deleteCart = await prisma.cart.deleteMany({where:{cenemaId:id}})
+        const deleteBooking = await prisma.booking.deleteMany({where:{cenemaId:id}})
+        const deleteRating = await prisma.cenemaRating.deleteMany({where:{cenemaId:id}})
         const result = await prisma.cenema.delete({
             where: {
                 id

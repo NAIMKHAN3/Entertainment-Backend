@@ -93,6 +93,9 @@ exports.getCinemaById = getCinemaById;
 const deleteCinema = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
+        const deleteCart = yield prisma_1.default.cart.deleteMany({ where: { cenemaId: id } });
+        const deleteBooking = yield prisma_1.default.booking.deleteMany({ where: { cenemaId: id } });
+        const deleteRating = yield prisma_1.default.cenemaRating.deleteMany({ where: { cenemaId: id } });
         const result = yield prisma_1.default.cenema.delete({
             where: {
                 id

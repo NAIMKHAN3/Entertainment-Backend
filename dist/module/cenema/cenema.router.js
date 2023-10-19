@@ -5,6 +5,8 @@ const cenema_validation_1 = require("./cenema.validation");
 const cenema_controller_1 = require("./cenema.controller");
 const router = (0, express_1.Router)();
 router.post('/create-cenema', cenema_validation_1.verifyCenema, cenema_controller_1.createCenema);
+router.put('/update-cenema/:id', cenema_validation_1.verifyCenemaUpdate, cenema_controller_1.updateCenema);
+router.delete('/delete-cenema/:id', cenema_controller_1.deleteCinema);
 router.get('/get-cenema', cenema_controller_1.getCenema);
 router.get('/get-cenema-by-id/:id', cenema_controller_1.getCinemaById);
 exports.default = router;
