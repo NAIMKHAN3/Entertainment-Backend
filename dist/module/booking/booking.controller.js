@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getBookingByUser = exports.getBooking = exports.updateBookingStatus = exports.createBooking = void 0;
+exports.getBookingByUser = exports.deleteBooking = exports.getBookingById = exports.getBooking = exports.updateBooking = exports.updatePaymentStatus = exports.updateBookingStatus = exports.createBooking = void 0;
 const prisma_1 = __importDefault(require("../../utils/prisma"));
 const createBooking = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -59,6 +59,46 @@ const updateBookingStatus = (req, res, next) => __awaiter(void 0, void 0, void 0
     }
 });
 exports.updateBookingStatus = updateBookingStatus;
+const updatePaymentStatus = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const result = yield prisma_1.default.booking.update({
+            where: {
+                id
+            },
+            data: req.body
+        });
+        console.log(result);
+        res.status(200).send({
+            success: true,
+            message: `Payment Success`
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.updatePaymentStatus = updatePaymentStatus;
+const updateBooking = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const result = yield prisma_1.default.booking.update({
+            where: {
+                id
+            },
+            data: req.body
+        });
+        console.log(result);
+        res.status(200).send({
+            success: true,
+            message: `Booking Updated`
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.updateBooking = updateBooking;
 const getBooking = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield prisma_1.default.booking.findMany({
@@ -78,6 +118,47 @@ const getBooking = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.getBooking = getBooking;
+const getBookingById = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const result = yield prisma_1.default.booking.findFirst({
+            where: {
+                id
+            },
+            include: {
+                cenema: true
+            }
+        });
+        res.status(200).send({
+            success: true,
+            message: "Get Booking Success",
+            data: result
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.getBookingById = getBookingById;
+const deleteBooking = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const result = yield prisma_1.default.booking.delete({
+            where: {
+                id
+            }
+        });
+        res.status(200).send({
+            success: true,
+            message: "Delete Booking Success",
+            data: result
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.deleteBooking = deleteBooking;
 const getBookingByUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.user;

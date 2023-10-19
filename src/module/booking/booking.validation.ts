@@ -11,6 +11,16 @@ const bookingValidation = {
 
 export const verifyBooking = validate(bookingValidation,{},{})
 
+const bookingUpdateValidation = {
+    body: Joi.object({
+        slot: Joi.string().optional(),
+        bookingDate: Joi.string().optional(),
+        person: Joi.string().optional(),
+    })
+}
+
+export const verifyBookingUpdate = validate(bookingUpdateValidation,{},{})
+
 
 const bookingStatusUpdate = {
     query: Joi.object({
@@ -18,3 +28,10 @@ const bookingStatusUpdate = {
     })
 }
 export const verifyStatusUpdate = validate(bookingStatusUpdate,{},{})
+
+const bookingPaymentStatusUpdate = {
+    body: Joi.object({
+        paymentStatus: Joi.boolean().required()
+    })
+}
+export const verifyPaymentStatusUpdate = validate(bookingPaymentStatusUpdate,{},{})

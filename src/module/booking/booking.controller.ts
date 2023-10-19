@@ -46,6 +46,48 @@ export const updateBookingStatus = async (req: Request, res: Response, next: Nex
         next(err)
     }
 }
+export const updatePaymentStatus = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+
+
+        const result = await prisma.booking.update({
+            where: {
+                id
+            },
+            data: req.body
+        })
+        console.log(result)
+        res.status(200).send({
+            success: true,
+            message: `Payment Success`
+        })
+    }
+    catch (err) {
+        next(err)
+    }
+}
+
+export const updateBooking = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const result = await prisma.booking.update({
+            where: {
+                id
+            },
+
+            data: req.body
+        })
+        console.log(result)
+        res.status(200).send({
+            success: true,
+            message: `Booking Updated`
+        })
+    }
+    catch (err) {
+        next(err)
+    }
+}
 
 export const getBooking = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -58,6 +100,46 @@ export const getBooking = async (req: Request, res: Response, next: NextFunction
         res.status(200).send({
             success: true,
             message: "Get Booking Success",
+            data: result
+        })
+    }
+    catch (err) {
+        next(err)
+    }
+}
+
+export const getBookingById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const {id} = req.params;    
+        const result = await prisma.booking.findFirst({
+            where:{
+                id
+            },
+            include:{
+                cenema: true
+            }
+        })
+        res.status(200).send({
+            success: true,
+            message: "Get Booking Success",
+            data: result
+        })
+    }
+    catch (err) {
+        next(err)
+    }
+}
+export const deleteBooking = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const {id} = req.params;    
+        const result = await prisma.booking.delete({
+            where:{
+                id
+            }
+        })
+        res.status(200).send({
+            success: true,
+            message: "Delete Booking Success",
             data: result
         })
     }

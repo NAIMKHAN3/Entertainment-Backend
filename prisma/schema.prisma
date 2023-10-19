@@ -110,6 +110,7 @@ model Booking {
   slot String
   person String
   status Status @default(Pending)
+  paymentStatus Boolean @default(false)
   user User @relation(fields: [userId], references: [id])
   cenema Cenema @relation(fields: [cenemaId], references: [id])
 }
