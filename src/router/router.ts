@@ -9,6 +9,7 @@ import userRouter from "../module/user/user.index";
 import cartRouter from "../module/cart/cart.index";
 import bookingRouter from "../module/booking/booking.index";
 import ratingRouter from "../module/rating/rating.index";
+import blogRouter from "../module/blog/blog.index";
 
 const router = Router();
 
@@ -22,5 +23,6 @@ router.use('/user', userRouter)
 router.use('/cart', cartRouter)
 router.use('/booking', bookingRouter)
 router.use('/rating', ratingRouter)
+router.use('/blog', blogRouter)
 
 export default router;

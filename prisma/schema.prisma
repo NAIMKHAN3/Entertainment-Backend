@@ -67,6 +67,7 @@ model CenemaRating {
 model Blog {
   id String @id @default(uuid())
   image String
+  title String
   description String
   like Int @default(0)
   comment Comment[]
