@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCart = exports.createCart = void 0;
+exports.deleteCart = exports.getCart = exports.createCart = void 0;
 const prisma_1 = __importDefault(require("../../utils/prisma"));
 const createCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -46,6 +46,10 @@ const getCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         const result = yield prisma_1.default.cart.findMany({
             where: {
                 userId: id
+            },
+            include: {
+                user: true,
+                cenema: true
             }
         });
         res.status(200).send({
@@ -59,3 +63,22 @@ const getCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.getCart = getCart;
+const deleteCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const result = yield prisma_1.default.cart.delete({
+            where: {
+                id
+            }
+        });
+        res.status(200).send({
+            success: true,
+            message: "Cart Deleted successfull",
+            data: result
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.deleteCart = deleteCart;

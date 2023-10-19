@@ -34,11 +34,33 @@ export const getCart = async (req: Request, res: Response, next: NextFunction) =
         const result = await prisma.cart.findMany({
             where: {
                 userId: id
+            },
+            include:{
+                user: true,
+                cenema: true
             }
         })
         res.status(200).send({
             success: true,
             message: "Get User cart successfull",
+            data: result
+        })
+    }
+    catch (err) {
+        next(err)
+    }
+}
+export const deleteCart = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const result = await prisma.cart.delete({
+            where: {
+                id
+            }
+        })
+        res.status(200).send({
+            success: true,
+            message: "Cart Deleted successfull",
             data: result
         })
     }

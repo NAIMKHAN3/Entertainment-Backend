@@ -7,4 +7,5 @@ const cart_controller_1 = require("./cart.controller");
 const router = (0, express_1.Router)();
 router.post('/create-cart', cart_validation_1.verifyCart, verifyJwt_1.verifyJwt, cart_controller_1.createCart);
 router.get('/get-cart', verifyJwt_1.verifyJwt, cart_controller_1.getCart);
+router.delete('/delete-cart/:id', verifyJwt_1.verifyJwt, cart_controller_1.deleteCart);
 exports.default = router;
