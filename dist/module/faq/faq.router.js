@@ -8,4 +8,5 @@ router.post('/create-faq', faq_validation_1.verifyFaq, faq_controller_1.createFa
 router.put('/update-faq/:id', faq_validation_1.verifyFaqUpdate, faq_controller_1.updateFaq);
 router.get('/get-faq', faq_controller_1.getFaq);
 router.delete('/delete-faq/:id', faq_controller_1.deleteFaq);
+router.get('/get-faq-by-id/:id', faq_controller_1.getFaqById);
 exports.default = router;

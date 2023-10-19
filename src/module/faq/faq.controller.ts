@@ -68,3 +68,22 @@ export const deleteFaq = async (req: Request, res: Response, next: NextFunction)
         next(err)
     }
 }
+export const getFaqById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const {id} = req.params;
+        const result = await prisma.fAQ.findFirst({
+            where:{
+                id
+            }
+        })
+        res.status(200).send({
+            success:true,
+            statusCode: 200,
+            message: "Get FAQ Successs",
+            data: result
+        })
+    }
+    catch (err) {
+        next(err)
+    }
+}
